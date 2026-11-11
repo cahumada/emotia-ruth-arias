@@ -157,7 +157,12 @@ Líneas de autor, altas más bajas, sin generados. Heurística de unas 400 por t
 
 ## Tasks
 
-- [ ] T1 (CA-01, CA-05): Andamiaje Next.js en la raíz, pnpm, TypeScript estricto, Tailwind, Vitest, Playwright, pino, `.gitignore`, `.env.example` y una prueba que corre.
+- [x] T1 (CA-01, CA-05): Andamiaje Next.js en la raíz, pnpm, TypeScript estricto, Tailwind, Vitest, Playwright, pino, `.gitignore`, `.env.example` y una prueba que corre.
+  - Evidence: `pnpm test`: 4 pruebas en verde (commit 2d09381)
+  - Evidence: `pnpm lint`: sin hallazgos (commit 2d09381)
+  - Evidence: `pnpm typecheck`: sin errores (commit 2d09381)
+  - Evidence: `pnpm build`: ruta `/` estática (commit 2d09381)
+  - Evidence: `GET /` respondió 200, `lang="es-AR"`, `robots` `noindex, nofollow` (commit 2d09381)
 - [ ] T2 (CA-02): Tokens de la home según la cascada final de `styles.css`, y componentes de encabezado, menú, pie y botón.
 - [ ] T3 (CA-02, CA-06): Home desde el inicio hasta terapia individual, con sus imágenes y `noindex`.
 - [ ] T4 (CA-02, CA-03): Home desde el bloque del test hasta el pie, anclas y enlaces externos. El formulario se ve y valida en el cliente; todavía no envía.
@@ -172,6 +177,6 @@ Sin evidencia todavía. Cada tarea, al cerrarse, deja el comando, el resultado r
 
 ## Progress
 
-Borrador. Ocho tareas. Ningún código de la aplicación hasta que el desarrollador acepte el plan.
+Plan aceptado. T1 cerrada en `2d09381`. Siguiente: T2, tokens y chrome de la home.
 
-Siguiente paso: revisar este archivo y aceptarlo con `dw-told-ai dw-flow accept sitio-emotia`.
+Pronóstico en curso: T1 cerró con el andamiaje y el lockfile (la cuenta de autor de esa tarea incluye `pnpm-lock.yaml`).
