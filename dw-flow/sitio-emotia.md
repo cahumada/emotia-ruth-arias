@@ -188,7 +188,7 @@ T2 a T8 cerradas en `63a4b55`. El detalle de comandos está en cada tarea.
 
 Plan aceptado. T1 en `2d09381`. T2 a T8 en `63a4b55`. El aviso secuencial del newsletter quedó en `b9d3551`.
 
-El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio.
+El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio. Las pruebas de envío no se ejecutan por ahora: `deliver-newsletter.test.ts` sigue en el repositorio y Vitest lo excluye.
 
 ## Closure
 
