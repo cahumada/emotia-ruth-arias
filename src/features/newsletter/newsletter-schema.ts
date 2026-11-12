@@ -17,3 +17,9 @@ export function createNewsletterSchema() {
 }
 
 export type NewsletterFormValues = z.infer<ReturnType<typeof createNewsletterSchema>>;
+
+const newsletterEmail = createNewsletterSchema().shape.email;
+
+export function isNewsletterEmailValid(email: string): boolean {
+  return newsletterEmail.safeParse(email).success;
+}

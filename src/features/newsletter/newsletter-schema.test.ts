@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { createNewsletterSchema } from "@/features/newsletter/newsletter-schema";
+import { createNewsletterSchema, isNewsletterEmailValid } from "@/features/newsletter/newsletter-schema";
 
 const schema = createNewsletterSchema();
 
@@ -20,6 +20,13 @@ it("rejects a signup without consent", () => {
   if (!parsed.success) {
     expect(parsed.error.issues.some((issue) => issue.path[0] === "consent")).toBe(true);
   }
+});
+
+it("keeps subscribe unavailable until the address is a valid email", () => {
+  expect(isNewsletterEmailValid("")).toBe(false);
+  expect(isNewsletterEmailValid("   ")).toBe(false);
+  expect(isNewsletterEmailValid("no-es-un-correo")).toBe(false);
+  expect(isNewsletterEmailValid("  persona@example.com  ")).toBe(true);
 });
 
 it("accepts an address and an explicit consent", () => {

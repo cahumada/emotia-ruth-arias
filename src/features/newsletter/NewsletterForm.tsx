@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useForm, type FieldErrors } from "react-hook-form";
+import { useState, type FormEvent } from "react";
+import { useForm, useWatch, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newsletterMessages } from "@/features/newsletter/messages";
 import {
   createNewsletterSchema,
+  isNewsletterEmailValid,
   type NewsletterFormValues,
 } from "@/features/newsletter/newsletter-schema";
 import { subscribeToNews } from "@/features/newsletter/subscribe-to-news";
@@ -68,13 +69,27 @@ export function NewsletterForm() {
     form.setFocus("consent");
   }
 
+  const consentError = feedback.field === "consent" ? feedback.message : "";
+  const statusMessage = feedback.field === "consent" ? "" : feedback.message;
+  const emailAddress = useWatch({ control: form.control, name: "email" });
+  const canSubscribe = isNewsletterEmailValid(emailAddress ?? "");
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    if (!isNewsletterEmailValid(form.getValues("email"))) {
+      event.preventDefault();
+      return;
+    }
+
+    void form.handleSubmit(onValid, onInvalid)(event);
+  }
+
   return (
     <form
       className="news-form"
       id="emotia-newsletter"
       data-hydrated={isHydrated ? "true" : "false"}
       noValidate
-      onSubmit={form.handleSubmit(onValid, onInvalid)}
+      onSubmit={onSubmit}
     >
       <div className="visually-hidden" aria-hidden="true">
         <label htmlFor="news-company">{newsletterMessages.honeypotLabel}</label>
@@ -96,25 +111,32 @@ export function NewsletterForm() {
           aria-invalid={feedback.field === "email" || undefined}
           {...form.register("email")}
         />
-        <button className="btn news-submit" type="submit" disabled={isSending}>
+        <button className="btn news-submit" type="submit" disabled={!canSubscribe || isSending}>
           {newsletterMessages.submit}
         </button>
       </div>
-      <label className="news-accept" htmlFor="news-consent">
+      <label
+        className={consentError ? "news-accept is-invalid" : "news-accept"}
+        htmlFor="news-consent"
+      >
         <input
           id="news-consent"
           type="checkbox"
-          aria-invalid={feedback.field === "consent" || undefined}
+          aria-invalid={consentError ? true : undefined}
+          aria-describedby={consentError ? "news-consent-error" : undefined}
           {...form.register("consent")}
         />
         <span>{newsletterMessages.consent}</span>
       </label>
+      {consentError ? (
+        <p className="news-field-error" id="news-consent-error" role="alert">
+          {consentError}
+        </p>
+      ) : null}
       <p className="news-note" id="news-info">
         {newsletterMessages.info}
       </p>
-      <p aria-live="polite" className="news-response" id="news-response" role="status">
-        {feedback.message}
-      </p>
+      <p aria-live="polite" className="news-response" id="news-response" role="status">{statusMessage}</p>
     </form>
   );
 }
