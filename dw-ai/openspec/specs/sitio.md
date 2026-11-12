@@ -11,4 +11,4 @@
 - CA-03: Las anclas de la home se conservan. `/index.html`, `/test.html` y `/aula.html` redirigen a `/`, `/test` y `/aula`. Los enlaces externos quedan iguales a los del HTML.
 - CA-04: `#emotia-newsletter` valida correo y consentimiento, nace con el consentimiento desmarcado, y muestra éxito solo cuando Resend confirma los dos envíos. No guarda el correo. Si falta un secreto, la acción rechaza el envío.
 - CA-05: `.gitignore` excluye secretos, dependencias y artefactos de build. `.env.example` lista las variables con valores ficticios. El lockfile se versiona.
-- CA-06: Todas las páginas publican `noindex, nofollow` hasta una autorización expresa de quitarlo.
+- CA-06: Tras la autorización expresa de publicación, las páginas son indexables (`index, follow`).

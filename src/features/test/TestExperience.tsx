@@ -240,7 +240,7 @@ export function TestExperience() {
       </main>
       <footer className="footer">
         <div className="wrap">
-          {testChrome.footer} <span className="footer-side">{testChrome.footerNote}</span>
+          {testChrome.footer}
         </div>
       </footer>
     </>

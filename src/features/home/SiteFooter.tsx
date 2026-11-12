@@ -36,7 +36,6 @@ export function SiteFooter() {
         <span>
           <strong>{homeChrome.name}</strong> · {homeChrome.role}
         </span>
-        <span>{homeChrome.footerNote}</span>
         <nav aria-label={homeChrome.socialLabel} className="footer-social">
           {socialLinks.map((link) => (
             <a

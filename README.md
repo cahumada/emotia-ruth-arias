@@ -1,6 +1,6 @@
 # emotia-ruth-arias
 
-Next.js app for the Emotia site of Ruth Arias. It is not published: every page sends `noindex, nofollow` until that is explicitly lifted.
+Next.js app for the Emotia site of Ruth Arias. Pages are indexable.
 
 ## Routes
 

@@ -13,15 +13,13 @@ const anchors = [
   "main",
 ];
 
-test("home keeps the designer heading, anchors and noindex", async ({ page }) => {
+test("home keeps the designer heading and anchors and is indexable", async ({ page }) => {
   const response = await page.goto("/", { waitUntil: "domcontentloaded" });
 
   expect(response?.status()).toBe(200);
   await expect(page.locator("html")).toHaveAttribute("lang", "es-AR");
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    /noindex,\s*nofollow/,
-  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /index,\s*follow/);
+  await expect(page.getByText("Demo para revisión")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "¿Sentís que hay algo en tus relaciones",
   );
@@ -46,19 +44,15 @@ test("legacy html paths redirect to the app routes", async ({ page }) => {
   await expect(page).toHaveURL(/\/aula$/);
 });
 
-test("test and aula render and stay out of the index", async ({ page }) => {
+test("test and aula render and are indexable", async ({ page }) => {
   await page.goto("/test", { waitUntil: "domcontentloaded" });
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    /noindex,\s*nofollow/,
-  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /index,\s*follow/);
+  await expect(page.getByText("No publicado")).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Empezar el test" })).toBeVisible();
 
   await page.goto("/aula", { waitUntil: "domcontentloaded" });
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    /noindex,\s*nofollow/,
-  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /index,\s*follow/);
+  await expect(page.getByText("Prototipo de revisión")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("La misma pelea");
   await expect(page.getByRole("tablist", { name: "Elegí cómo trabajar" })).toHaveAttribute(
     "data-hydrated",

@@ -31,7 +31,7 @@ Convertir la web de `C:\Users\Cristian\Downloads\Emotia_Ruth_Arias_REV5_proyecto
 - CA-03: Las anclas de la home se conservan. `/index.html`, `/test.html` y `/aula.html` redirigen a `/`, `/test` y `/aula`. Los enlaces externos quedan iguales a los del HTML.
 - CA-04: `#emotia-newsletter` valida correo y consentimiento, nace con el consentimiento desmarcado, y muestra éxito solo cuando Resend confirma los dos envíos. No guarda el correo. Si falta un secreto, la acción rechaza el envío.
 - CA-05: `.gitignore` excluye secretos, dependencias y artefactos de build. `.env.example` lista las variables con valores ficticios. El lockfile se versiona.
-- CA-06: Todas las páginas publican `noindex, nofollow` hasta una autorización expresa de quitarlo.
+- CA-06: Tras la autorización expresa de publicación, las páginas son indexables (`index, follow`).
 
 ### URL que se conservan
 
@@ -115,7 +115,7 @@ Newsletter:
 
 `.gitignore`: `node_modules`, `.next`, `out`, `dist`, `coverage`, `playwright-report`, `test-results`, `.vercel`, `.env`, `.env.local`, `.env*.local`, logs, `.DS_Store`, `Thumbs.db`, `.worktrees/`. No ignora el lockfile ni `.env.example`.
 
-README en inglés: cómo correr, variables con valores ficticios, que los logs salen por stdout, `noindex`, y los desvíos de idioma y de tema.
+README en inglés: cómo correr, variables con valores ficticios, que los logs salen por stdout, que las páginas son indexables, y los desvíos de idioma y de tema.
 
 ### Desvíos
 
@@ -151,7 +151,7 @@ Líneas de autor, altas más bajas, sin generados. Heurística de unas 400 por t
 - Dominio verificado de Resend y las tres variables: las aporta el desarrollador fuera del repositorio.
 - No hay página de política de privacidad en el origen. No se redacta una.
 - Formación, matrícula y trayectoria no se publican. No se inventa el botón de la publicación pendiente.
-- Quitar `noindex` solo con autorización expresa.
+- Indexación autorizada: las páginas publican `index, follow` y los pies ya no avisan que el sitio es una demo.
 - Límite de tasa del formulario, fuera de esta entrega.
 - El PR que toque la acción, el secreto o el correo lleva etiqueta `security` y revisión de una segunda persona. Si no hay revisor, se documenta el desvío de autorrevisión; no se presenta como revisión ajena.
 
@@ -189,6 +189,8 @@ T2 a T8 cerradas en `63a4b55`. El detalle de comandos está en cada tarea.
 Plan aceptado. T1 en `2d09381`. T2 a T8 en `63a4b55`. El aviso secuencial del newsletter quedó en `b9d3551`.
 
 El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio. Las pruebas de envío no se ejecutan por ahora: `deliver-newsletter.test.ts` sigue en el repositorio y Vitest lo excluye.
+
+Publicación autorizada: las páginas quedan indexables y se quitan los avisos de demo del pie.
 
 ## Closure
 

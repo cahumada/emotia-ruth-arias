@@ -4,7 +4,7 @@ export const siteConfig = {
   description:
     "Ruth Arias, psicóloga clínica. Psicoterapia individual online y recursos de reflexión sobre emociones y vínculos.",
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 } as const;

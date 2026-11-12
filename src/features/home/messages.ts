@@ -8,7 +8,6 @@ export const homeChrome = {
   closeMenu: "Cerrar menú",
   navLabel: "Navegación principal",
   book: "Reservar consulta",
-  footerNote: "Emotia® · Demo para revisión · No publicada",
   socialLabel: "Redes sociales de Ruth Arias",
   instagram: "Instagram",
   tiktok: "TikTok",

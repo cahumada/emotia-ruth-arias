@@ -56,6 +56,5 @@ export const aulaChrome = {
   therapyBody:
     "Conocé el enfoque de apego adulto y EFIT y los criterios de admisión antes de acceder a la agenda.",
   therapyCta: "Conocer Emotia ↗",
-  footer:
-    "Emotia® · Ruth Arias · Prototipo de revisión. El espacio definitivo tendrá acceso privado y los materiales originales.",
+  footer: "Emotia® · Ruth Arias",
 } as const;

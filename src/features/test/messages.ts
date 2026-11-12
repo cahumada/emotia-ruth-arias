@@ -40,5 +40,4 @@ export const testChrome = {
   asideBody:
     " Es una herramienta psicoeducativa de autorreflexión, no un test psicológico validado. No determina estilos de apego, diagnósticos ni la calidad o seguridad de una relación. En situaciones de violencia, coerción, intimidación o control, la prioridad es tu protección y seguridad; no corresponde interpretarlas como un ciclo de responsabilidad compartida.",
   footer: "Lic. Ruth Arias · Psicóloga Clínica · Emotia® | Colección Vínculos",
-  footerNote: "Prototipo privado · No publicado",
 } as const;
