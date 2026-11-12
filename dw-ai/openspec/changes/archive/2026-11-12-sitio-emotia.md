@@ -188,14 +188,14 @@ T2 a T8 cerradas en `63a4b55`. El detalle de comandos está en cada tarea.
 
 Plan aceptado. T1 en `2d09381`. T2 a T8 en `63a4b55`. El aviso secuencial del newsletter quedó en `b9d3551`.
 
-El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio.
+El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio. Las pruebas de envío no se ejecutan por ahora: `deliver-newsletter.test.ts` sigue en el repositorio y Vitest lo excluye.
 
 ## Closure
 
 <!-- Written by dw-told-ai close: run it again instead of editing this section. -->
 
 - Estado del cierre: `cerrado`
-- DW Review: `needs_decision`, reconocida por cahumada85@gmail.com el 2026-11-12T09:35:34Z, riesgo aceptado: "La lente risk no dejó informe. Resiliencia, legibilidad y confiabilidad pasaron con hallazgos no bloqueantes. El aviso al estudio es el único registro y sale antes de la confirmación; esta entrega no incluye reintento ni serialización."
+- DW Review: `ready`, reconocida por cahumada85@gmail.com el 2026-11-12T09:57:08Z
 - Especificación viva: `dw-ai/openspec/specs/sitio.md`
 - Copia archivada: `dw-ai/openspec/changes/archive/2026-11-12-sitio-emotia.md`
 
@@ -211,11 +211,11 @@ El pull request del envío lleva etiqueta `security`. Las variables de Resend si
 
 | Phase | Provider / model | Runs | Input | Output | Cache read | Cache write | Cost (US$) |
 |---|---|---:|---:|---:|---:|---:|---:|
-| `dw-flow` | `cursor/grok-4.7@256k:fast` | 14 | 923667 | 137364 | 243840 | 0 | 0.0000 |
+| `dw-flow` | `cursor/grok-4.7@256k:fast` | 17 | 933357 | 147799 | 243840 | 0 | 0.0000 |
 | `dw-review-resilience` | `cursor/composer-2-5:fast` | 3 | 39867 | 6304 | 0 | 0 | 0.0000 |
 | `dw-review-readability` | `cursor/composer-2-5:fast` | 3 | 47417 | 8794 | 0 | 0 | 0.0000 |
 | `dw-review-reliability` | `cursor/composer-2-5:fast` | 3 | 52794 | 12594 | 0 | 0 | 0.0000 |
-| **Total** | | 23 | 1063745 | 165056 | 243840 | 0 | 0.0000 |
+| **Total** | | 26 | 1073435 | 175491 | 243840 | 0 | 0.0000 |
 
 Measured by dw-told-ai from each phase's own usage report. A phase that ran more than once counts every run. Cost is what the provider reported; with a subscription login it is an estimate, not a charge.
 <!-- dw-told-ai:usage:end -->
