@@ -168,7 +168,10 @@ Líneas de autor, altas más bajas, sin generados. Heurística de unas 400 por t
 - [x] T4 (CA-02, CA-03): Home desde el bloque del test hasta el pie, anclas y enlaces externos. El formulario se ve y valida en el cliente; todavía no envía.
 - [x] T5 (CA-02, CA-03): Página `/test` con el cuestionario, la devolución en el navegador y pruebas de esa lógica. Redirect desde `/test.html`.
 - [x] T6 (CA-02, CA-03): Página `/aula` con pestañas, notas locales, descarga y copia. Placeholders sin video, PDF ni audio. Redirect desde `/aula.html`.
+  - Evidence: `pnpm build`: `/`, `/test` y `/aula` estáticas (commit 63a4b55)
+  - Evidence: `pnpm test:e2e`: 4 pruebas en verde (commit 63a4b55)
 - [x] T7 (CA-04): Server Action, schema, honeypot y Resend. Pruebas con el cliente de correo simulado: consentimiento ausente, correo inválido, honeypot, secreto ausente y envío sin loguear la dirección.
+  - Evidence: `pnpm test`: 23 pruebas en verde (commit b9d3551)
 - [x] T8 (CA-03, CA-06): Redirect de `/index.html`, metadata `noindex` en las tres rutas, README y una prueba e2e de humo de `/`, `/test` y `/aula`.
   - Evidence: `pnpm test`: 21 pruebas en verde (commit 63a4b55)
   - Evidence: `pnpm lint`: sin hallazgos (commit 63a4b55)
@@ -183,6 +186,36 @@ T2 a T8 cerradas en `63a4b55`. El detalle de comandos está en cada tarea.
 
 ## Progress
 
-Plan aceptado. T1 en `2d09381`. T2 a T8 en `63a4b55`.
+Plan aceptado. T1 en `2d09381`. T2 a T8 en `63a4b55`. El aviso secuencial del newsletter quedó en `b9d3551`.
 
-Siguiente: DW Review antes del cierre. El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio.
+El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio.
+
+## Closure
+
+<!-- Written by dw-told-ai close: run it again instead of editing this section. -->
+
+- Estado del cierre: `cerrado`
+- DW Review: `needs_decision`, reconocida por cahumada85@gmail.com el 2026-11-12T09:35:34Z, riesgo aceptado: "La lente risk no dejó informe. Resiliencia, legibilidad y confiabilidad pasaron con hallazgos no bloqueantes. El aviso al estudio es el único registro y sale antes de la confirmación; esta entrega no incluye reintento ni serialización."
+- Especificación viva: `dw-ai/openspec/specs/sitio.md`
+- Copia archivada: `dw-ai/openspec/changes/archive/2026-11-12-sitio-emotia.md`
+
+- CA-01 ✔ — T1: `pnpm test`: 4 pruebas en verde (commit 2d09381); T1: `pnpm lint`: sin hallazgos (commit 2d09381); T1: `pnpm typecheck`: sin errores (commit 2d09381); T1: `pnpm build`: ruta `/` estática (commit 2d09381); T1: `GET /` respondió 200, `lang="es-AR"`, `robots` `noindex, nofollow` (commit 2d09381)
+- CA-02 ✔ — T6: `pnpm build`: `/`, `/test` y `/aula` estáticas (commit 63a4b55); T6: `pnpm test:e2e`: 4 pruebas en verde (commit 63a4b55)
+- CA-03 ✔ — T6: `pnpm build`: `/`, `/test` y `/aula` estáticas (commit 63a4b55); T6: `pnpm test:e2e`: 4 pruebas en verde (commit 63a4b55); T8: `pnpm test`: 21 pruebas en verde (commit 63a4b55); T8: `pnpm lint`: sin hallazgos (commit 63a4b55); T8: `pnpm typecheck`: sin errores (commit 63a4b55); T8: `pnpm build`: `/`, `/test` y `/aula` estáticas (commit 63a4b55); T8: `pnpm test:e2e`: 4 pruebas en verde (commit 63a4b55); T8: `GET /` 200 con `noindex`; `/index.html`, `/test.html` y `/aula.html` responden 308 (commit 63a4b55)
+- CA-04 ✔ — T7: `pnpm test`: 23 pruebas en verde (commit b9d3551)
+- CA-05 ✔ — T1: `pnpm test`: 4 pruebas en verde (commit 2d09381); T1: `pnpm lint`: sin hallazgos (commit 2d09381); T1: `pnpm typecheck`: sin errores (commit 2d09381); T1: `pnpm build`: ruta `/` estática (commit 2d09381); T1: `GET /` respondió 200, `lang="es-AR"`, `robots` `noindex, nofollow` (commit 2d09381)
+- CA-06 ✔ — T8: `pnpm test`: 21 pruebas en verde (commit 63a4b55); T8: `pnpm lint`: sin hallazgos (commit 63a4b55); T8: `pnpm typecheck`: sin errores (commit 63a4b55); T8: `pnpm build`: `/`, `/test` y `/aula` estáticas (commit 63a4b55); T8: `pnpm test:e2e`: 4 pruebas en verde (commit 63a4b55); T8: `GET /` 200 con `noindex`; `/index.html`, `/test.html` y `/aula.html` responden 308 (commit 63a4b55)
+
+<!-- dw-told-ai:usage:start -->
+## Consumption
+
+| Phase | Provider / model | Runs | Input | Output | Cache read | Cache write | Cost (US$) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| `dw-flow` | `cursor/grok-4.7@256k:fast` | 14 | 923667 | 137364 | 243840 | 0 | 0.0000 |
+| `dw-review-resilience` | `cursor/composer-2-5:fast` | 3 | 39867 | 6304 | 0 | 0 | 0.0000 |
+| `dw-review-readability` | `cursor/composer-2-5:fast` | 3 | 47417 | 8794 | 0 | 0 | 0.0000 |
+| `dw-review-reliability` | `cursor/composer-2-5:fast` | 3 | 52794 | 12594 | 0 | 0 | 0.0000 |
+| **Total** | | 23 | 1063745 | 165056 | 243840 | 0 | 0.0000 |
+
+Measured by dw-told-ai from each phase's own usage report. A phase that ran more than once counts every run. Cost is what the provider reported; with a subscription login it is an estimate, not a charge.
+<!-- dw-told-ai:usage:end -->
