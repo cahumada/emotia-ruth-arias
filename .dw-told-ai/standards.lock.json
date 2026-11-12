@@ -1,0 +1,21 @@
+{
+  "source": "https://github.com/diwork-solutions/dw-standards.git",
+  "ref": "v0.7.0",
+  "commit": "050f03d7fe09639067d48597d2dd3f4af358d489",
+  "version": "0.7.0",
+  "installedAt": "2026-11-11T23:16:00Z",
+  "installedBy": "0.13.0",
+  "files": {
+    ".agents/skills/backend-dotnet-standards/SKILL.md": "d2659215c5b41d60e5b84b3bb3fb41a52fe1420d9838ee8f6ac902e3028f1ebf",
+    ".agents/skills/backend-standards/SKILL.md": "6238a2082439b5d559bf7df99d39c0baa9716e98a9baa84005e9572b38ef6022",
+    ".agents/skills/base-standards/SKILL.md": "983417fed8e2ecaff463cf5372bc684fe7aeaf6306dcc9f754e4602c90c4848a",
+    ".agents/skills/cache-standards/SKILL.md": "a0de5b13d9f6747d73ebeac6686785cd49426d7ca68bb8fd305d1b53914e4a2c",
+    ".agents/skills/dapper-standards/SKILL.md": "ca19df1a50c14048a1fe83af5282214f7f1caf53d78095e0fdb5ef6af20fec89",
+    ".agents/skills/efcore-standards/SKILL.md": "f5864e5432278776e69413ea9d39ffafd54f717cdcecdc7a4822073e6d7805ad",
+    ".agents/skills/frontend-standards/SKILL.md": "0f2e36b1b259c354ee6a25093623513b1ea84b2c8683c5e453647692eddbf0f5",
+    ".agents/skills/next-standards/SKILL.md": "5340f417d343e555cdb0c75a2212716d8f5f0de1f060dadc126b30d81153c0f0",
+    ".agents/skills/security-standards/SKILL.md": "adb9f77a5e8835948f9e8ddccadc8ff75766f6581ee783ab95c0e80abe4d6e8b",
+    ".agents/skills/servicebus-standards/SKILL.md": "ee02745d6f60aef06df8d1d9131430104ec810b863a547d34f51df481fd08e4b",
+    "dw-ai/WORKFLOW.md": "146f5ff88bcb26b17edb7aaac152fa84d8ba4d45cf5c8d6fea30ac87be697b29"
+  }
+}

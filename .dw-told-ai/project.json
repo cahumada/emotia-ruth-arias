@@ -1,0 +1,30 @@
+{
+  "architecture": {
+    "components": [
+      {
+        "path": ".",
+        "layers": [
+          "frontend",
+          "bff"
+        ],
+        "stacks": [
+          "next",
+          "tailwind"
+        ]
+      }
+    ]
+  },
+  "artifactLanguage": {
+    "default": "en",
+    "es": [
+      "commits",
+      "pull-requests",
+      "plans",
+      "tracker"
+    ]
+  },
+  "domain": "generic",
+  "standards": {
+    "source": "https://github.com/diwork-solutions/dw-standards.git"
+  }
+}

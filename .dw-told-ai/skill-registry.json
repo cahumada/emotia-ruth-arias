@@ -1,0 +1,179 @@
+{
+  "components": [
+    {
+      "path": ".",
+      "layers": [
+        "frontend",
+        "bff"
+      ],
+      "stacks": [
+        "next",
+        "tailwind"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "backend-dotnet-standards",
+      "description": "DiWork's .NET API standards: solution layout by DDD layer, Minimal API endpoints, dependency injection, type and input validation, entity-DTO mapping, snake_case and documented contracts, Swagger, .NET versions and upgrades, architecture questions (microservice or project API, distributed transactions, persistence) and external integrations. Use when designing, implementing or reviewing a .NET backend service, its endpoints, its worker or its integrations.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "backend"
+      ],
+      "stacks": [
+        "dotnet"
+      ],
+      "extends": "backend-standards",
+      "origin": "package",
+      "path": ".agents/skills/backend-dotnet-standards/SKILL.md"
+    },
+    {
+      "name": "backend-standards",
+      "description": "DiWork's backend standards: layers, API design, errors, lists, data access, transactions, migrations, audit, configuration and backend tests. Use when designing, implementing or reviewing server-side code: APIs, route handlers, server actions, services, database queries, migrations or background jobs.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "backend",
+        "bff"
+      ],
+      "origin": "package",
+      "path": ".agents/skills/backend-standards/SKILL.md"
+    },
+    {
+      "name": "base-standards",
+      "description": "DiWork's cross-cutting development standards: language of each artifact, naming, types, code organization, error handling, logging, testing, dependencies, commits, pull requests, branches and worktrees. Use when designing, implementing or reviewing any change in a DiWork project, whatever its stack, and before creating a branch or a worktree, writing a commit, a pull request or an implementation plan.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "origin": "package",
+      "path": ".agents/skills/base-standards/SKILL.md"
+    },
+    {
+      "name": "cache-standards",
+      "description": "DiWork's cache and state store standards for .NET with Redis and Azure Cosmos DB: what may be cached, keys scoped by tenant, expiration and invalidation, HybridCache with Redis, Cosmos DB partitioning and point reads, and their use as idempotency, saga and outbox store next to Azure Service Bus. Use when designing, implementing or reviewing a .NET component that caches data or keeps state in Redis or Cosmos DB.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "backend"
+      ],
+      "stacks": [
+        "redis",
+        "cosmosdb"
+      ],
+      "extends": "backend-dotnet-standards",
+      "origin": "package",
+      "path": ".agents/skills/cache-standards/SKILL.md"
+    },
+    {
+      "name": "dapper-standards",
+      "description": "DiWork's Dapper standards: connection factory, parameterized queries and stored procedures on SQL Server, Oracle and PostgreSQL, transactions, mapping, pagination and versioned schema scripts. Use when designing, implementing or reviewing a .NET component that persists with Dapper, SQL queries or stored procedures.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "backend"
+      ],
+      "stacks": [
+        "dapper"
+      ],
+      "extends": "backend-dotnet-standards",
+      "origin": "package",
+      "path": ".agents/skills/dapper-standards/SKILL.md"
+    },
+    {
+      "name": "efcore-standards",
+      "description": "DiWork's Entity Framework Core standards: DbContext and entity configuration, providers for SQL Server, Oracle and PostgreSQL, queries, tracking, concurrency, soft delete and tenant filters, and migrations. Use when designing, implementing or reviewing a .NET component that persists with Entity Framework Core.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "backend"
+      ],
+      "stacks": [
+        "efcore"
+      ],
+      "extends": "backend-dotnet-standards",
+      "origin": "package",
+      "path": ".agents/skills/efcore-standards/SKILL.md"
+    },
+    {
+      "name": "frontend-standards",
+      "description": "DiWork's frontend standards: structure, components, state, data fetching, feedback, forms, styling, accessibility, user-facing text and frontend tests. Use when designing, implementing or reviewing user interface code, screens, components, forms or client-side logic.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "frontend"
+      ],
+      "origin": "package",
+      "path": ".agents/skills/frontend-standards/SKILL.md"
+    },
+    {
+      "name": "next-standards",
+      "description": "DiWork's Next.js standards: App Router only, route conventions, default loading skeletons, and where Server vs Client Components go. Use when designing, implementing or reviewing a Next.js page, layout, route handler or server action.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "frontend",
+        "bff"
+      ],
+      "stacks": [
+        "next"
+      ],
+      "extends": "frontend-standards",
+      "origin": "package",
+      "path": ".agents/skills/next-standards/SKILL.md"
+    },
+    {
+      "name": "security-standards",
+      "description": "DiWork's security standards: authentication, authorization, multi-tenant isolation, secrets, personal data, input handling, external callers, security tests, dependencies and security review. Use when designing, implementing or reviewing anything touching authentication, permissions, tenants, secrets, personal or customer data, external input, redirects, webhooks or third-party dependencies.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "origin": "package",
+      "path": ".agents/skills/security-standards/SKILL.md"
+    },
+    {
+      "name": "servicebus-standards",
+      "description": "DiWork's Azure Service Bus standards for .NET: the worker inside the service's solution, queues and topics, message contracts, publishing through an outbox, idempotent consumers, retries and dead-lettering, ordering with sessions, and sagas for distributed transactions. Use when designing, implementing or reviewing a .NET component that sends or receives Azure Service Bus messages.",
+      "phases": [
+        "implement",
+        "review",
+        "dw-flow"
+      ],
+      "layers": [
+        "backend"
+      ],
+      "stacks": [
+        "servicebus"
+      ],
+      "extends": "backend-dotnet-standards",
+      "origin": "package",
+      "path": ".agents/skills/servicebus-standards/SKILL.md"
+    }
+  ],
+  "version": 1
+}
