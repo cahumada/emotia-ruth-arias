@@ -3,6 +3,7 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { buildNotesDocument, classPauses } from "@/features/aula/build-notes";
 import { aulaChrome } from "@/features/aula/messages";
+import { useIsHydrated } from "@/lib/use-is-hydrated";
 
 const tabs = [
   { id: "notas", label: aulaChrome.notesTab },
@@ -13,6 +14,7 @@ const tabs = [
 type TabId = (typeof tabs)[number]["id"];
 
 export function AulaMaterials() {
+  const isHydrated = useIsHydrated();
   const [tab, setTab] = useState<TabId>("notas");
   const [notes, setNotes] = useState<[string, string, string]>(["", "", ""]);
   const [message, setMessage] = useState("");
@@ -67,7 +69,12 @@ export function AulaMaterials() {
 
   return (
     <section className="panel" aria-label={aulaChrome.materialsLabel}>
-      <div className="tabs" role="tablist" aria-label={aulaChrome.tabsLabel}>
+      <div
+        className="tabs"
+        role="tablist"
+        aria-label={aulaChrome.tabsLabel}
+        data-hydrated={isHydrated ? "true" : "false"}
+      >
         {tabs.map((item, index) => {
           const isSelected = tab === item.id;
 

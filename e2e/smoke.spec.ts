@@ -14,7 +14,7 @@ const anchors = [
 ];
 
 test("home keeps the designer heading, anchors and noindex", async ({ page }) => {
-  const response = await page.goto("/");
+  const response = await page.goto("/", { waitUntil: "domcontentloaded" });
 
   expect(response?.status()).toBe(200);
   await expect(page.locator("html")).toHaveAttribute("lang", "es-AR");
@@ -38,34 +38,39 @@ test("home keeps the designer heading, anchors and noindex", async ({ page }) =>
 });
 
 test("legacy html paths redirect to the app routes", async ({ page }) => {
-  await page.goto("/index.html");
+  await page.goto("/index.html", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/$/);
-  await page.goto("/test.html");
+  await page.goto("/test.html", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/test$/);
-  await page.goto("/aula.html");
+  await page.goto("/aula.html", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/aula$/);
 });
 
 test("test and aula render and stay out of the index", async ({ page }) => {
-  await page.goto("/test");
+  await page.goto("/test", { waitUntil: "domcontentloaded" });
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
     /noindex,\s*nofollow/,
   );
   await expect(page.getByRole("button", { name: "Empezar el test" })).toBeVisible();
 
-  await page.goto("/aula");
+  await page.goto("/aula", { waitUntil: "domcontentloaded" });
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
     /noindex,\s*nofollow/,
   );
   await expect(page.getByRole("heading", { level: 1 })).toContainText("La misma pelea");
+  await expect(page.getByRole("tablist", { name: "Elegí cómo trabajar" })).toHaveAttribute(
+    "data-hydrated",
+    "true",
+  );
   await page.getByRole("tab", { name: "Cuadernillo" }).click();
   await expect(page.getByRole("button", { name: "Descargar cuadernillo ↓" })).toBeDisabled();
 });
 
 test("newsletter validates the address before any send", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("#emotia-newsletter")).toHaveAttribute("data-hydrated", "true");
   await page.getByLabel("Tu correo electrónico").fill("no-es-un-correo");
   await page.getByRole("button", { name: "Suscribirme" }).click();
   await expect(page.getByRole("status")).toHaveText("Revisá el correo electrónico ingresado.");

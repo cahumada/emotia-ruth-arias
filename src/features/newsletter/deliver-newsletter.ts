@@ -73,22 +73,41 @@ export async function deliverNewsletter({
     return { status: "error" };
   }
 
+  // La bandeja del estudio es el único registro. La confirmación sale solo
+  // después de que ese aviso fue aceptado.
+  const notice = buildNoticeEmail(from, to, parsed.data.email, now);
+  const confirmation = buildConfirmationEmail(from, parsed.data.email);
+
   try {
-    await Promise.all([
-      mailClient.send(buildConfirmationEmail(from, parsed.data.email)),
-      mailClient.send(buildNoticeEmail(from, to, parsed.data.email, now)),
-    ]);
+    await mailClient.send(notice);
   } catch (error) {
-    const errorName = error instanceof Error ? error.name : "Error";
-    logger.error(
-      { correlationId, errorName: toLoggableErrorName(errorName) },
-      "Newsletter send failed",
-    );
+    logSendFailure(logger, correlationId, error, "notice");
+    return { status: "error" };
+  }
+
+  try {
+    await mailClient.send(confirmation);
+  } catch (error) {
+    logSendFailure(logger, correlationId, error, "confirmation");
     return { status: "error" };
   }
 
   logger.info({ outcome: "sent", correlationId }, "Newsletter notices sent");
   return { status: "success" };
+}
+
+function logSendFailure(
+  logger: Logger,
+  correlationId: string,
+  error: unknown,
+  failedLeg: "notice" | "confirmation",
+): void {
+  const errorName = error instanceof Error ? error.name : "Error";
+
+  logger.error(
+    { correlationId, errorName: toLoggableErrorName(errorName), failedLeg },
+    "Newsletter send failed",
+  );
 }
 
 export function buildConfirmationEmail(from: string, to: string) {

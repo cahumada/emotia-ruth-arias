@@ -9,10 +9,12 @@ import {
   type NewsletterFormValues,
 } from "@/features/newsletter/newsletter-schema";
 import { subscribeToNews } from "@/features/newsletter/subscribe-to-news";
+import { useIsHydrated } from "@/lib/use-is-hydrated";
 
 const schema = createNewsletterSchema();
 
 export function NewsletterForm() {
+  const isHydrated = useIsHydrated();
   const [isSending, setIsSending] = useState(false);
   const [feedback, setFeedback] = useState<{
     field: "email" | "consent" | null;
@@ -48,6 +50,8 @@ export function NewsletterForm() {
       }
 
       setFeedback({ field: null, message: newsletterMessages.sendError });
+    } catch {
+      setFeedback({ field: null, message: newsletterMessages.sendError });
     } finally {
       setIsSending(false);
     }
@@ -68,6 +72,7 @@ export function NewsletterForm() {
     <form
       className="news-form"
       id="emotia-newsletter"
+      data-hydrated={isHydrated ? "true" : "false"}
       noValidate
       onSubmit={form.handleSubmit(onValid, onInvalid)}
     >

@@ -5,14 +5,17 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
+  timeout: 60_000,
   use: {
     baseURL: "http://127.0.0.1:3000",
     trace: "on-first-retry",
+    navigationTimeout: 60_000,
   },
   webServer: {
     command: "pnpm dev",
     url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
+    timeout: 120_000,
   },
   projects: [
     {

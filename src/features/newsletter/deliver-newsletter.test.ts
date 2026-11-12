@@ -29,6 +29,22 @@ function recordingClient(sent: OutboundEmail[]): MailClient {
   };
 }
 
+function failingOnCall(sent: OutboundEmail[], failingCall: number): MailClient {
+  let calls = 0;
+
+  return {
+    async send(message) {
+      calls += 1;
+
+      if (calls === failingCall) {
+        throw new Error("Resend rejected the newsletter message");
+      }
+
+      sent.push(message);
+    },
+  };
+}
+
 it("rejects a malformed address without sending or logging it", async () => {
   const sent: OutboundEmail[] = [];
   const { logger, lines } = captureLogger();
@@ -128,8 +144,10 @@ it("sends the confirmation and the studio notice without logging the address", a
 
   expect(result).toEqual({ status: "success" });
   expect(sent).toHaveLength(2);
-  const confirmation = sent.find((message) => message.to === address);
-  const notice = sent.find((message) => message.to === "estudio@example.com");
+  expect(sent[0]?.to).toBe("estudio@example.com");
+  expect(sent[1]?.to).toBe(address);
+  const notice = sent[0];
+  const confirmation = sent[1];
   expect(confirmation?.text).toContain(newsletterMessages.consent);
   expect(confirmation?.text).toContain(newsletterMessages.confirmationPrivacy);
   expect(confirmation?.text).toContain(newsletterMessages.confirmationOptOut);
@@ -138,6 +156,49 @@ it("sends the confirmation and the studio notice without logging the address", a
   expect(notice?.text).toContain(newsletterMessages.consent);
   const log = lines.join("");
   expect(log).toContain("Newsletter notices sent");
+  expect(log).not.toContain(address);
+  expect(log).not.toContain(newsletterMessages.consent);
+});
+
+it("does not confirm the person when the studio notice fails", async () => {
+  const sent: OutboundEmail[] = [];
+  const { logger, lines } = captureLogger();
+  const result = await deliverNewsletter({
+    input: { email: address, consent: true, company: "" },
+    mailClient: failingOnCall(sent, 1),
+    from: "noticias@example.com",
+    to: "estudio@example.com",
+    now: sentAt,
+    logger,
+    correlationId: "corr-notice-failed",
+    missingConfig: [],
+  });
+
+  expect(result).toEqual({ status: "error" });
+  expect(sent).toHaveLength(0);
+  const log = lines.join("");
+  expect(log).toContain('"failedLeg":"notice"');
+  expect(log).not.toContain(address);
+});
+
+it("reports an error when the confirmation fails after the studio notice", async () => {
+  const sent: OutboundEmail[] = [];
+  const { logger, lines } = captureLogger();
+  const result = await deliverNewsletter({
+    input: { email: address, consent: true, company: "" },
+    mailClient: failingOnCall(sent, 2),
+    from: "noticias@example.com",
+    to: "estudio@example.com",
+    now: sentAt,
+    logger,
+    correlationId: "corr-confirmation-failed",
+    missingConfig: [],
+  });
+
+  expect(result).toEqual({ status: "error" });
+  expect(sent.map((message) => message.to)).toEqual(["estudio@example.com"]);
+  const log = lines.join("");
+  expect(log).toContain('"failedLeg":"confirmation"');
   expect(log).not.toContain(address);
   expect(log).not.toContain(newsletterMessages.consent);
 });
