@@ -1,0 +1,21 @@
+export const newsletterMessages = {
+  eyebrow: "Para seguir en contacto",
+  title: "Recibí novedades de Emotia",
+  intro:
+    "Noticias sobre clases, publicaciones y recursos para seguir explorando las emociones y los vínculos. Sin compromiso.",
+  emailLabel: "Tu correo electrónico",
+  emailPlaceholder: "nombre@correo.com",
+  submit: "Suscribirme",
+  consent: "Quiero recibir novedades de Emotia por email. Puedo dejar de recibirlas cuando quiera.",
+  info: "Al enviar, tu correo se usa para avisarnos y para confirmarte. Este sitio no lo guarda.",
+  invalidEmail: "Revisá el correo electrónico ingresado.",
+  missingConsent: "Para suscribirte, primero tenés que aceptar recibir novedades.",
+  success: "Listo. Revisá tu correo: te enviamos la confirmación.",
+  sendError: "No pudimos completar el envío. Tu correo no se guardó. Probá de nuevo en unos minutos.",
+  confirmationSubject: "Confirmación de novedades de Emotia",
+  noticeSubject: "Nueva suscripción a novedades",
+  confirmationIntro: "Recibimos tu pedido de novedades de Emotia.",
+  confirmationPrivacy: "Este sitio no guarda tu dirección. El aviso quedó en la bandeja de Emotia.",
+  confirmationOptOut: "Para no recibir más mensajes, respondé este correo.",
+  honeypotLabel: "Empresa",
+} as const;

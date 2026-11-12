@@ -1,9 +1,13 @@
 import type { NextConfig } from "next";
+import { legacyRedirects } from "./src/lib/legacy-redirects";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  allowedDevOrigins: ["127.0.0.1"],
+  async redirects() {
+    return legacyRedirects.map((redirect) => ({ ...redirect }));
+  },
   turbopack: {
     rules: {
       "*.css": {

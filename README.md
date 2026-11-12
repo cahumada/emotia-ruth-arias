@@ -2,6 +2,14 @@
 
 Next.js app for the Emotia site of Ruth Arias. It is not published: every page sends `noindex, nofollow` until that is explicitly lifted.
 
+## Routes
+
+- `/` home
+- `/test` free reflection quiz
+- `/aula` class review page
+
+`/index.html`, `/test.html` and `/aula.html` redirect to those routes. External links from the design are unchanged.
+
 ## Scripts
 
 ```bash
@@ -11,6 +19,7 @@ pnpm test
 pnpm lint
 pnpm typecheck
 pnpm build
+pnpm test:e2e
 ```
 
 ## Environment
