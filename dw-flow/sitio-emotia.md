@@ -163,20 +163,26 @@ Líneas de autor, altas más bajas, sin generados. Heurística de unas 400 por t
   - Evidence: `pnpm typecheck`: sin errores (commit 2d09381)
   - Evidence: `pnpm build`: ruta `/` estática (commit 2d09381)
   - Evidence: `GET /` respondió 200, `lang="es-AR"`, `robots` `noindex, nofollow` (commit 2d09381)
-- [ ] T2 (CA-02): Tokens de la home según la cascada final de `styles.css`, y componentes de encabezado, menú, pie y botón.
-- [ ] T3 (CA-02, CA-06): Home desde el inicio hasta terapia individual, con sus imágenes y `noindex`.
-- [ ] T4 (CA-02, CA-03): Home desde el bloque del test hasta el pie, anclas y enlaces externos. El formulario se ve y valida en el cliente; todavía no envía.
-- [ ] T5 (CA-02, CA-03): Página `/test` con el cuestionario, la devolución en el navegador y pruebas de esa lógica. Redirect desde `/test.html`.
-- [ ] T6 (CA-02, CA-03): Página `/aula` con pestañas, notas locales, descarga y copia. Placeholders sin video, PDF ni audio. Redirect desde `/aula.html`.
-- [ ] T7 (CA-04): Server Action, schema, honeypot y Resend. Pruebas con el cliente de correo simulado: consentimiento ausente, correo inválido, honeypot, secreto ausente y envío sin loguear la dirección.
-- [ ] T8 (CA-03, CA-06): Redirect de `/index.html`, metadata `noindex` en las tres rutas, README y una prueba e2e de humo de `/`, `/test` y `/aula`.
+- [x] T2 (CA-02): Tokens de la home según la cascada final de `styles.css`, y componentes de encabezado, menú, pie y botón.
+- [x] T3 (CA-02, CA-06): Home desde el inicio hasta terapia individual, con sus imágenes y `noindex`.
+- [x] T4 (CA-02, CA-03): Home desde el bloque del test hasta el pie, anclas y enlaces externos. El formulario se ve y valida en el cliente; todavía no envía.
+- [x] T5 (CA-02, CA-03): Página `/test` con el cuestionario, la devolución en el navegador y pruebas de esa lógica. Redirect desde `/test.html`.
+- [x] T6 (CA-02, CA-03): Página `/aula` con pestañas, notas locales, descarga y copia. Placeholders sin video, PDF ni audio. Redirect desde `/aula.html`.
+- [x] T7 (CA-04): Server Action, schema, honeypot y Resend. Pruebas con el cliente de correo simulado: consentimiento ausente, correo inválido, honeypot, secreto ausente y envío sin loguear la dirección.
+- [x] T8 (CA-03, CA-06): Redirect de `/index.html`, metadata `noindex` en las tres rutas, README y una prueba e2e de humo de `/`, `/test` y `/aula`.
+  - Evidence: `pnpm test`: 21 pruebas en verde (commit 63a4b55)
+  - Evidence: `pnpm lint`: sin hallazgos (commit 63a4b55)
+  - Evidence: `pnpm typecheck`: sin errores (commit 63a4b55)
+  - Evidence: `pnpm build`: `/`, `/test` y `/aula` estáticas (commit 63a4b55)
+  - Evidence: `pnpm test:e2e`: 4 pruebas en verde (commit 63a4b55)
+  - Evidence: `GET /` 200 con `noindex`; `/index.html`, `/test.html` y `/aula.html` responden 308 (commit 63a4b55)
 
 ## Evidence
 
-Sin evidencia todavía. Cada tarea, al cerrarse, deja el comando, el resultado real y el commit.
+T2 a T8 cerradas en `63a4b55`. El detalle de comandos está en cada tarea.
 
 ## Progress
 
-Plan aceptado. T1 cerrada en `2d09381`. Siguiente: T2, tokens y chrome de la home.
+Plan aceptado. T1 en `2d09381`. T2 a T8 en `63a4b55`.
 
-Pronóstico en curso: T1 cerró con el andamiaje y el lockfile (la cuenta de autor de esa tarea incluye `pnpm-lock.yaml`).
+Siguiente: DW Review antes del cierre. El pull request del envío lleva etiqueta `security`. Las variables de Resend siguen fuera del repositorio.
