@@ -20,3 +20,8 @@ Quedaron fuera del commit el índice .codegraph, memory.db, usage-ledger.jsonl y
 
 El acuse falló por el espacio en la ruta del lanzador .cmd. Reintento con node y la ruta completa: exit 0.
 Recibo de sitio-emotia reconocido por [REDACTED:email], status needs_decision. Motivo: la lente risk no dejó informe; las otras pasaron con hallazgos no bloqueantes.
+
+## 2026-11-12 · sitio-emotia/dw-implement — Rama nueva, suscripción y favicons
+
+Rama feat/site-icons-and-newsletter desde origin/master (fb75614).
+Se entrega el espacio del hero, el aviso de consentimiento junto a la casilla, Suscribirme deshabilitado hasta un correo válido, y los íconos web y mobile en src/app.
