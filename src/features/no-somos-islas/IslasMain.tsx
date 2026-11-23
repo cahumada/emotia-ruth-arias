@@ -2,8 +2,15 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { isEbookEntry } from "@/features/no-somos-islas/ebook-entry";
-import { islasAssets, islasChrome } from "@/features/no-somos-islas/messages";
+import {
+  createIslasAccessSchema,
+  type IslasAccessValues,
+} from "@/features/no-somos-islas/islas-access-schema";
+import { islasAccessMessages, islasAssets, islasChrome } from "@/features/no-somos-islas/messages";
+import { requestIslasAccess } from "@/features/no-somos-islas/request-islas-access";
 import { externalLinks } from "@/lib/external-links";
 
 declare global {
@@ -49,8 +56,17 @@ function HeadphonesIcon() {
   );
 }
 
+const accessSchema = createIslasAccessSchema();
+
 export function IslasMain() {
   const [manualUnlock, setManualUnlock] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [hasEmailError, setHasEmailError] = useState(false);
+  const form = useForm<IslasAccessValues>({
+    resolver: zodResolver(accessSchema),
+    defaultValues: { email: "", newsletter: false, company: "" },
+  });
   const ebookUnlock = useSyncExternalStore(subscribeEbookUnlock, fromEbookEntry, () => false);
   const unlocked = manualUnlock || ebookUnlock;
   const audioSectionRef = useRef<HTMLElement>(null);
@@ -98,13 +114,49 @@ export function IslasMain() {
     };
   }, [unlocked]);
 
-  const onAccessSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    setManualUnlock(true);
-    resourceActionsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
+  async function onValid(values: IslasAccessValues) {
+    setIsSending(true);
+    setHasEmailError(false);
+    setStatusMessage("");
+
+    try {
+      const result = await requestIslasAccess({
+        email: values.email,
+        newsletter: values.newsletter,
+        company: values.company ?? "",
+      });
+
+      if (result.status === "success") {
+        setStatusMessage(islasAccessMessages.success);
+        setManualUnlock(true);
+        resourceActionsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      if (result.status === "invalid") {
+        setHasEmailError(true);
+        setStatusMessage(result.message);
+        form.setFocus("email");
+        return;
+      }
+
+      setStatusMessage(islasAccessMessages.sendError);
+    } catch {
+      setStatusMessage(islasAccessMessages.sendError);
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    void form.handleSubmit(onValid, onInvalid)(event);
+  }
+
+  function onInvalid() {
+    setHasEmailError(true);
+    setStatusMessage(islasAccessMessages.invalidEmail);
+    form.setFocus("email");
+  }
 
   return (
     <main>
@@ -123,25 +175,38 @@ export function IslasMain() {
               <p className="gate-kicker">{islasChrome.gateKicker}</p>
               <h2>{islasChrome.gateTitle}</h2>
               <p>{islasChrome.gateIntro}</p>
-              <form id="access-form" onSubmit={onAccessSubmit}>
+              <form id="access-form" noValidate onSubmit={onSubmit}>
+                <div className="visually-hidden" aria-hidden="true">
+                  <label htmlFor="access-company">{islasAccessMessages.honeypotLabel}</label>
+                  <input
+                    autoComplete="off"
+                    id="access-company"
+                    tabIndex={-1}
+                    {...form.register("company")}
+                  />
+                </div>
                 <label htmlFor="access-email">{islasChrome.emailLabel}</label>
                 <input
+                  aria-describedby="gate-status"
+                  aria-invalid={hasEmailError || undefined}
                   autoComplete="email"
                   id="access-email"
                   maxLength={254}
-                  name="email"
                   placeholder={islasChrome.emailPlaceholder}
                   required
                   type="email"
+                  {...form.register("email")}
                 />
                 <label className="consent-line">
-                  <input id="news-optin" name="news-optin" type="checkbox" />
+                  <input id="news-optin" type="checkbox" {...form.register("newsletter")} />
                   <span>{islasChrome.consent}</span>
                 </label>
-                <button className="button gate-button" type="submit">
+                <button className="button gate-button" disabled={isSending} type="submit">
                   {islasChrome.gateSubmit}
                 </button>
-                <p aria-live="polite" className="gate-status" id="gate-status" role="status" />
+                <p aria-live="polite" className="gate-status" id="gate-status" role="status">
+                  {statusMessage}
+                </p>
               </form>
               <p className="gate-disclaimer">{islasChrome.gateDisclaimer}</p>
             </div>

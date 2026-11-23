@@ -173,8 +173,12 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
   - Evidence: `pnpm test`: 22 pruebas en verde; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores; `pnpm build`: `/no-somos-islas` estática
   - Evidence: `curl` contra `pnpm start`: página 200 con título, descripción, `theme-color` `#512681`, `index, follow` y tres enlaces externos con `target="_blank" rel="noopener noreferrer"`; PDF, webp y mp3 200 con `Cache-Control: public, max-age=604800, stale-while-revalidate=86400`; la página no recibe ese encabezado
   - Evidence: PDF publicado: 1.085.945 bytes, sha256 `19d8c6fa5d7a…`, igual al del HTML corregido; descarga `No_somos_islas_Ruth_Arias.pdf`
-  - Evidence: Playwright, HTML corregido contra la página en 1280 y 390 px, bloqueada y habilitada: colores, fuentes, pesos, tamaños y anchos idénticos; única diferencia, `.hero` 19,7 px más bajo en 390 px bloqueado por el largo distinto del aviso RN-D04
-- [ ] T2 (CA-03, CA-04, CA-05): Traslado de `mail-config` y `resend-mail-client` a `src/lib/mail/` y pedido de acceso `requestIslasAccess` con su schema, aviso, confirmación, campo trampa y pruebas; el formulario habilita los recursos solo con la respuesta de éxito.
+  - Evidence: Playwright, HTML corregido contra la página en 1280 y 390 px, bloqueada y habilitada: colores, fuentes, pesos, tamaños y anchos idénticos; única diferencia, `.hero` 19,7 px más bajo en 390 px bloqueado por el largo distinto del aviso RN-D04 (commit 348c9f6)
+- [x] T2 (CA-03, CA-04, CA-05): Traslado de `mail-config` y `resend-mail-client` a `src/lib/mail/` y pedido de acceso `requestIslasAccess` con su schema, aviso, confirmación, campo trampa y pruebas; el formulario habilita los recursos solo con la respuesta de éxito.
+  - Evidence: RED `pnpm vitest run src/features/no-somos-islas`: falla, el módulo `deliver-islas-access` no existe; GREEN: 20 pruebas en verde (textos exactos de los dos correos con y sin novedades, aviso antes que confirmación, fallas de cada envío, campo trampa, configuración faltante, correo inválido y el correo ausente de los logs en todas las rutas)
+  - Evidence: `pnpm test`: 37 pruebas en verde, newsletter incluida; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores; `pnpm build`: correcto
+  - Evidence: Playwright contra `pnpm start` sin `RESEND_*`: con un correo válido se ve "No pudimos completar el envío. Tu correo no se guardó. Probá de nuevo en unos minutos." y los recursos siguen ocultos; con "malo", "Revisá el correo electrónico ingresado."; el log del servidor trae `missing-config` y 0 apariciones del correo
+  - Evidence: el desbloqueo con envío real por Resend no se probó en el navegador: queda para la prueba del desarrollador con las variables de Vercel
 - [ ] T3 (CA-07): Prueba de Playwright con los dos enlaces del PDF, barra final incluida.
 - [ ] T4 (CA-08): Aviso de consentimiento en todo el sitio, elección recordada, enlace "Preferencias de cookies" en los pies, y GA4 cargado solo con consentimiento y `NEXT_PUBLIC_GA_ID`; `.env.example`.
 - [ ] T5 (CA-09): Eventos de la página por `track-event`, incluido `nsis_signup` con `newsletter`, y prueba de que llegan solo con consentimiento.
@@ -183,4 +187,4 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
 
 ## Progress
 
-Plan aprobado. T1 terminada. Siguiente paso: T2, pedido de acceso por Resend.
+Plan aprobado. T1 y T2 terminadas. Siguiente paso: T3, enlaces del PDF.

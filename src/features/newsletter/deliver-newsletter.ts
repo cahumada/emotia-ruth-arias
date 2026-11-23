@@ -1,6 +1,6 @@
 import type { Logger } from "pino";
 import { toLoggableErrorName } from "@/lib/to-loggable-error-name";
-import type { MailClient } from "@/features/newsletter/mail-config";
+import type { MailClient } from "@/lib/mail/mail-config";
 import { newsletterMessages } from "@/features/newsletter/messages";
 import { createNewsletterSchema } from "@/features/newsletter/newsletter-schema";
 

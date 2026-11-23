@@ -53,3 +53,20 @@ export const islasMeta = {
   description:
     "No somos islas. Ebook gratuito y audio reflexivo de Ruth Arias, psicóloga clínica.",
 } as const;
+
+export const islasAccessMessages = {
+  invalidEmail: "Revisá el correo electrónico ingresado.",
+  success: "Listo. Ya podés descargar el ebook. Te enviamos la confirmación por correo.",
+  sendError: "No pudimos completar el envío. Tu correo no se guardó. Probá de nuevo en unos minutos.",
+  honeypotLabel: "Empresa",
+  noticeSubject: "Nuevo pedido de No somos islas",
+  noticeResource: "No somos islas",
+  confirmationSubject: "Tu ebook y audio de No somos islas",
+  confirmationIntro: 'Gracias por pedir "No somos islas".',
+  ebookUrl: "https://rutharias.emotia.ar/no-somos-islas/No_somos_islas_Ruth_Arias.pdf",
+  audioUrl: "https://rutharias.emotia.ar/no-somos-islas/?origen=ebook#audio",
+  newsletterYes: "Sí, quiero recibir novedades y recursos.",
+  newsletterNo: "No pediste recibir novedades.",
+  confirmationPrivacy: "Este sitio no guarda tu dirección. El aviso quedó en la bandeja de Emotia.",
+  confirmationOptOut: "Para no recibir más mensajes, respondé este correo.",
+} as const;

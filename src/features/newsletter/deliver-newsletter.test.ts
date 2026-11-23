@@ -2,7 +2,7 @@ import { Writable } from "node:stream";
 import type { Logger } from "pino";
 import { expect, it } from "vitest";
 import { createLogger } from "@/lib/logger";
-import type { MailClient, OutboundEmail } from "@/features/newsletter/mail-config";
+import type { MailClient, OutboundEmail } from "@/lib/mail/mail-config";
 import { newsletterMessages } from "@/features/newsletter/messages";
 import { deliverNewsletter } from "@/features/newsletter/deliver-newsletter";
 
