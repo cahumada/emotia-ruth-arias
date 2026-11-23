@@ -179,17 +179,22 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
   - Evidence: `pnpm test`: 37 pruebas en verde, newsletter incluida; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores; `pnpm build`: correcto
   - Evidence: Playwright contra `pnpm start` sin `RESEND_*`: con un correo válido se ve "No pudimos completar el envío. Tu correo no se guardó. Probá de nuevo en unos minutos." y los recursos siguen ocultos; con "malo", "Revisá el correo electrónico ingresado."; el log del servidor trae `missing-config` y 0 apariciones del correo
   - Evidence: el desbloqueo con envío real por Resend no se probó en el navegador: queda para la prueba del desarrollador con las variables de Vercel (commit e4df861)
-  - Evidence: `git ls-tree HEAD src/features/newsletter` después de e4df861 todavía listaba `mail-config.ts`, `mail-config.test.ts` y `resend-mail-client.ts`; un commit de seguimiento los borra
+  - Evidence: `git ls-tree HEAD src/features/newsletter` después de e4df861 todavía listaba `mail-config.ts`, `mail-config.test.ts` y `resend-mail-client.ts`; se borran en 67fdab2 (7b999d0, con el mismo título, solo trae el plan)
 - [x] T3 (CA-07): Prueba de Playwright con los dos enlaces del PDF, barra final incluida.
   - Evidence: sin RED: las pruebas cubren un comportamiento que ya implementó T1; pasaron en la primera corrida
   - Evidence: `pnpm exec playwright test` contra `next start` en el puerto 3101 (el 3000 lo ocupa el `next dev` del desarrollador): 10 pruebas en verde, entre ellas las dos URL del PDF con barra final (ruta final `/no-somos-islas`, query y `#audio` conservados, audio habilitado y visible, formulario oculto) y los dos casos negativos de CA-06
   - Evidence: `pnpm test`: 39 pruebas en verde, incluida la guarda que lee las `/URI` del PDF y comprueba que las dos de `/no-somos-islas/` (`qr` y `pdf_link`) cumplen `isEbookEntry`
   - Evidence: la lectura del QR con un teléfono queda como prueba manual del desarrollador (commit 6071ffb)
-- [ ] T4 (CA-08): Aviso de consentimiento en todo el sitio, elección recordada, enlace "Preferencias de cookies" en los pies, y GA4 cargado solo con consentimiento y `NEXT_PUBLIC_GA_ID`; `.env.example`.
+- [x] T4 (CA-08): Aviso de consentimiento en todo el sitio, elección recordada, enlace "Preferencias de cookies" en los pies, y GA4 cargado solo con consentimiento y `NEXT_PUBLIC_GA_ID`; `.env.example`.
+  - Evidence: RED `pnpm exec vitest run src/features/analytics`: falla, el módulo no existe; GREEN: 8 pruebas de `consent-store` en verde (sin elección, aceptar, rechazar, persistencia, reabrir, `localStorage` que falla)
+  - Evidence: `pnpm test`: 47 pruebas en verde; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores; `pnpm build`: correcto
+  - Evidence: e2e contra `next start` en 3101, build sin id: 17 en verde y 2 omitidas (las de "con id"), las 10 anteriores incluidas; sin elegir, tras rechazar y sin id: 0 pedidos a Google y sin cookie `_ga`; el rechazo se recuerda al recargar; "Preferencias de cookies" reabre el aviso en las 4 rutas
+  - Evidence: build con `NEXT_PUBLIC_GA_ID=G-TEST123456`: tras "Aceptar" se pide `googletagmanager.com/gtag/js?id=G-TEST123456` (abortado en la prueba); tras "Rechazar", ningún pedido
+  - Evidence: capturas en 1280 y 390 px de `/no-somos-islas` con el aviso: colores de marca, botones visibles, la página sigue usable
 - [ ] T5 (CA-09): Eventos de la página por `track-event`, incluido `nsis_signup` con `newsletter`, y prueba de que llegan solo con consentimiento.
 
 ## Evidence
 
 ## Progress
 
-Plan aprobado. T1 a T3 terminadas. Siguiente paso: T4, aviso de consentimiento y GA4.
+Plan aprobado. T1 a T4 terminadas. Siguiente paso: T5, eventos de la página.

@@ -1,3 +1,4 @@
+import { CookiePreferencesButton } from "@/features/analytics/CookiePreferencesButton";
 import "./islas.css";
 import { IslasMain } from "@/features/no-somos-islas/IslasMain";
 import { islasChrome } from "@/features/no-somos-islas/messages";
@@ -27,6 +28,7 @@ export function IslasPage() {
         <div className="wrap foot">
           <span>{islasChrome.footerBrand}</span>
           <span>{islasChrome.footerNote}</span>
+          <CookiePreferencesButton />
         </div>
       </footer>
     </div>

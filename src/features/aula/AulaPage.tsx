@@ -1,3 +1,4 @@
+import { CookiePreferencesButton } from "@/features/analytics/CookiePreferencesButton";
 import "./aula.css";
 import { externalLinks } from "@/lib/external-links";
 import { AulaMaterials } from "@/features/aula/AulaMaterials";
@@ -81,7 +82,9 @@ export function AulaPage() {
           </div>
         </section>
       </main>
-      <footer className="shell footer">{aulaChrome.footer}</footer>
+      <footer className="shell footer">
+        {aulaChrome.footer} · <CookiePreferencesButton />
+      </footer>
     </div>
   );
 }

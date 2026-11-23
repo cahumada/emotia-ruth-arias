@@ -12,13 +12,7 @@ import {
 import { islasAccessMessages, islasAssets, islasChrome } from "@/features/no-somos-islas/messages";
 import { requestIslasAccess } from "@/features/no-somos-islas/request-islas-access";
 import { externalLinks } from "@/lib/external-links";
-
-declare global {
-  interface Window {
-    EMOTIA_ANALYTICS_ENABLED?: boolean;
-    gtag?: (...args: unknown[]) => void;
-  }
-}
+import "@/features/analytics/gtag.d";
 
 function sendAnalytics(name: string, params: Record<string, string> = {}) {
   if (window.EMOTIA_ANALYTICS_ENABLED === true && typeof window.gtag === "function") {
