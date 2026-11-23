@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CookiePreferencesButton } from "@/features/analytics/CookiePreferencesButton";
 import { externalLinks } from "@/lib/external-links";
 import { testChrome } from "@/features/test/messages";
 import {
@@ -240,7 +241,7 @@ export function TestExperience() {
       </main>
       <footer className="footer">
         <div className="wrap">
-          {testChrome.footer}
+          {testChrome.footer} · <CookiePreferencesButton />
         </div>
       </footer>
     </>

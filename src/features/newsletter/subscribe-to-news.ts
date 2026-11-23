@@ -3,8 +3,8 @@
 import { headers } from "next/headers";
 import { logger } from "@/lib/logger";
 import { deliverNewsletter, type SubscribeResult } from "@/features/newsletter/deliver-newsletter";
-import { readMailConfig } from "@/features/newsletter/mail-config";
-import { createResendMailClient } from "@/features/newsletter/resend-mail-client";
+import { readMailConfig } from "@/lib/mail/mail-config";
+import { createResendMailClient } from "@/lib/mail/resend-mail-client";
 
 // Public on purpose: the page has no session. Next.js checks the request origin.
 // The body is validated here, and a missing mail secret refuses every send.

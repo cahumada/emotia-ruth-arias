@@ -31,6 +31,7 @@ Copy `.env.example` to `.env.local` and replace the fake values in the host, not
 | `RESEND_API_KEY` | Resend API key. Server only. |
 | `RESEND_FROM` | Verified sender address. |
 | `RESEND_TO` | Inbox that receives the signup notice. |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 measurement id. Public, set at build time. Without it, or without the visitor accepting the notice, no Google script loads. |
 
 The public pages render without these variables. The newsletter action refuses to send when any of them is missing.
 

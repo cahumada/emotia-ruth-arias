@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import type { MailClient, MailConfig } from "@/features/newsletter/mail-config";
+import type { MailClient, MailConfig } from "@/lib/mail/mail-config";
 
 export function createResendMailClient(config: MailConfig): MailClient {
   const resend = new Resend(config.apiKey);
@@ -14,7 +14,7 @@ export function createResendMailClient(config: MailConfig): MailClient {
       });
 
       if (result.error) {
-        throw new Error("Resend rejected the newsletter message");
+        throw new Error("Resend rejected the mail message");
       }
     },
   };

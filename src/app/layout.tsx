@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ConsentBanner } from "@/features/analytics/ConsentBanner";
+import { GoogleAnalytics } from "@/features/analytics/GoogleAnalytics";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -11,7 +13,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang={siteConfig.locale}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ConsentBanner />
+        <GoogleAnalytics />
+      </body>
     </html>
   );
 }

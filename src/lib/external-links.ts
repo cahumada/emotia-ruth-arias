@@ -8,4 +8,5 @@ export const externalLinks = {
   tiktok: "https://www.tiktok.com/@lic_rutharias",
   youtube: "https://www.youtube.com/@ruthariaspsicologa",
   linkedin: "https://www.linkedin.com/in/ruth-arias/",
+  rutharias: "https://rutharias.emotia.ar/",
 } as const;

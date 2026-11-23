@@ -1,3 +1,4 @@
+import { CookiePreferencesButton } from "@/features/analytics/CookiePreferencesButton";
 import { externalLinks } from "@/lib/external-links";
 import { InstagramIcon, LinkedInIcon, TikTokIcon, YouTubeIcon } from "@/features/home/icons";
 import { homeChrome } from "@/features/home/messages";
@@ -34,7 +35,7 @@ export function SiteFooter() {
     <footer>
       <div className="container foot-inner">
         <span>
-          <strong>{homeChrome.name}</strong> · {homeChrome.role}
+          <strong>{homeChrome.name}</strong> · {homeChrome.role} · <CookiePreferencesButton />
         </span>
         <nav aria-label={homeChrome.socialLabel} className="footer-social">
           {socialLinks.map((link) => (

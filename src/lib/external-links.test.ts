@@ -13,4 +13,5 @@ it("keeps the designer destinations", () => {
   expect(externalLinks.tiktok).toBe("https://www.tiktok.com/@lic_rutharias");
   expect(externalLinks.youtube).toBe("https://www.youtube.com/@ruthariaspsicologa");
   expect(externalLinks.linkedin).toBe("https://www.linkedin.com/in/ruth-arias/");
+  expect(externalLinks.rutharias).toBe("https://rutharias.emotia.ar/");
 });

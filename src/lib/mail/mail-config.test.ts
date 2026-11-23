@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { readMailConfig } from "@/features/newsletter/mail-config";
+import { readMailConfig } from "@/lib/mail/mail-config";
 
 it("names every missing mail variable", () => {
   expect(readMailConfig({}).missing).toEqual(["RESEND_API_KEY", "RESEND_FROM", "RESEND_TO"]);
