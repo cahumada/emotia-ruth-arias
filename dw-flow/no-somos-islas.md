@@ -178,8 +178,12 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
   - Evidence: RED `pnpm vitest run src/features/no-somos-islas`: falla, el módulo `deliver-islas-access` no existe; GREEN: 20 pruebas en verde (textos exactos de los dos correos con y sin novedades, aviso antes que confirmación, fallas de cada envío, campo trampa, configuración faltante, correo inválido y el correo ausente de los logs en todas las rutas)
   - Evidence: `pnpm test`: 37 pruebas en verde, newsletter incluida; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores; `pnpm build`: correcto
   - Evidence: Playwright contra `pnpm start` sin `RESEND_*`: con un correo válido se ve "No pudimos completar el envío. Tu correo no se guardó. Probá de nuevo en unos minutos." y los recursos siguen ocultos; con "malo", "Revisá el correo electrónico ingresado."; el log del servidor trae `missing-config` y 0 apariciones del correo
-  - Evidence: el desbloqueo con envío real por Resend no se probó en el navegador: queda para la prueba del desarrollador con las variables de Vercel
-- [ ] T3 (CA-07): Prueba de Playwright con los dos enlaces del PDF, barra final incluida.
+  - Evidence: el desbloqueo con envío real por Resend no se probó en el navegador: queda para la prueba del desarrollador con las variables de Vercel (commit e4df861)
+- [x] T3 (CA-07): Prueba de Playwright con los dos enlaces del PDF, barra final incluida.
+  - Evidence: sin RED: las pruebas cubren un comportamiento que ya implementó T1; pasaron en la primera corrida
+  - Evidence: `pnpm exec playwright test` contra `next start` en el puerto 3101 (el 3000 lo ocupa el `next dev` del desarrollador): 10 pruebas en verde, entre ellas las dos URL del PDF con barra final (ruta final `/no-somos-islas`, query y `#audio` conservados, audio habilitado y visible, formulario oculto) y los dos casos negativos de CA-06
+  - Evidence: `pnpm test`: 39 pruebas en verde, incluida la guarda que lee las `/URI` del PDF y comprueba que las dos de `/no-somos-islas/` (`qr` y `pdf_link`) cumplen `isEbookEntry`
+  - Evidence: la lectura del QR con un teléfono queda como prueba manual del desarrollador
 - [ ] T4 (CA-08): Aviso de consentimiento en todo el sitio, elección recordada, enlace "Preferencias de cookies" en los pies, y GA4 cargado solo con consentimiento y `NEXT_PUBLIC_GA_ID`; `.env.example`.
 - [ ] T5 (CA-09): Eventos de la página por `track-event`, incluido `nsis_signup` con `newsletter`, y prueba de que llegan solo con consentimiento.
 
@@ -187,4 +191,4 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
 
 ## Progress
 
-Plan aprobado. T1 y T2 terminadas. Siguiente paso: T3, enlaces del PDF.
+Plan aprobado. T1 a T3 terminadas. Siguiente paso: T4, aviso de consentimiento y GA4.
