@@ -17,7 +17,6 @@ export function GoogleAnalytics() {
 
   useEffect(() => {
     if (!gaId) return;
-    window.EMOTIA_ANALYTICS_ENABLED = isEnabled;
     // gtag.js reads this flag before sending anything, so a rejection stops events at once.
     (window as unknown as Record<string, unknown>)[`ga-disable-${gaId}`] = !isEnabled;
     if (choice === "denied" && typeof window.gtag === "function") {

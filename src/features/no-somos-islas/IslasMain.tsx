@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { consentStore } from "@/features/analytics/consent-store";
+import { trackIslasEvent, trackIslasSignup } from "@/features/analytics/track-event";
 import { isEbookEntry } from "@/features/no-somos-islas/ebook-entry";
 import {
   createIslasAccessSchema,
@@ -12,13 +14,6 @@ import {
 import { islasAccessMessages, islasAssets, islasChrome } from "@/features/no-somos-islas/messages";
 import { requestIslasAccess } from "@/features/no-somos-islas/request-islas-access";
 import { externalLinks } from "@/lib/external-links";
-import "@/features/analytics/gtag.d";
-
-function sendAnalytics(name: string, params: Record<string, string> = {}) {
-  if (window.EMOTIA_ANALYTICS_ENABLED === true && typeof window.gtag === "function") {
-    window.gtag("event", name, params);
-  }
-}
 
 function fromEbookEntry(): boolean {
   if (typeof window === "undefined") return false;
@@ -67,6 +62,7 @@ export function IslasMain() {
   const resourceActionsRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioStartedRef = useRef(false);
+  const arrivalSentRef = useRef(false);
 
   useEffect(() => {
     if (!ebookUnlock) return;
@@ -75,15 +71,28 @@ export function IslasMain() {
     });
   }, [ebookUnlock]);
 
+  const consentChoice = useSyncExternalStore(
+    consentStore.subscribe,
+    consentStore.getChoice,
+    consentStore.getServerChoice,
+  );
+
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("utm_medium") === "qr") {
-      sendAnalytics("nsis_qr_arrival", { resource: "no_somos_islas" });
-    }
-    if (params.get("utm_medium") === "pdf_link") {
-      sendAnalytics("nsis_pdf_link_arrival", { resource: "no_somos_islas" });
-    }
-  }, []);
+    if (consentChoice !== "granted" || arrivalSentRef.current) return;
+    const medium = new URLSearchParams(window.location.search).get("utm_medium");
+    const eventName =
+      medium === "qr" ? "nsis_qr_arrival" : medium === "pdf_link" ? "nsis_pdf_link_arrival" : null;
+    if (!eventName) return;
+
+    // gtag is defined by the analytics init script, which can load after this effect runs.
+    let attempts = 0;
+    const timer = window.setInterval(() => {
+      attempts += 1;
+      if (trackIslasEvent(eventName)) arrivalSentRef.current = true;
+      if (arrivalSentRef.current || attempts >= 20) window.clearInterval(timer);
+    }, 250);
+    return () => window.clearInterval(timer);
+  }, [consentChoice]);
 
   useEffect(() => {
     const player = audioRef.current;
@@ -92,11 +101,11 @@ export function IslasMain() {
     const onPlay = () => {
       if (!audioStartedRef.current) {
         audioStartedRef.current = true;
-        sendAnalytics("nsis_audio_start", { resource: "no_somos_islas" });
+        trackIslasEvent("nsis_audio_start");
       }
     };
     const onEnded = () => {
-      sendAnalytics("nsis_audio_complete", { resource: "no_somos_islas" });
+      trackIslasEvent("nsis_audio_complete");
       audioStartedRef.current = false;
     };
 
@@ -121,6 +130,7 @@ export function IslasMain() {
       });
 
       if (result.status === "success") {
+        trackIslasSignup(values.newsletter);
         setStatusMessage(islasAccessMessages.success);
         setManualUnlock(true);
         resourceActionsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -210,7 +220,7 @@ export function IslasMain() {
                 download={islasAssets.ebookDownloadName}
                 href={islasAssets.ebookFile}
                 id="ebook-download"
-                onClick={() => sendAnalytics("nsis_ebook_download_click", { resource: "no_somos_islas" })}
+                onClick={() => trackIslasEvent("nsis_ebook_download_click")}
               >
                 <DownloadIcon />
                 {islasChrome.downloadEbook}

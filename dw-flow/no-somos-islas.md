@@ -94,6 +94,9 @@ Variables: `RESEND_API_KEY`, `RESEND_FROM` y `RESEND_TO`, las mismas de la home.
   - `nsis_audio_start` (una vez por reproducción) y `nsis_audio_complete`;
   - `nsis_qr_arrival` y `nsis_pdf_link_arrival` según `utm_medium`.
 - Las demás páginas solo envían la vista de página de GA4.
+- Si la persona llega por el QR o el enlace del PDF y acepta el aviso más tarde en la misma visita, la llegada se mide una vez en ese momento.
+- Ningún evento lleva el correo ni texto libre: los parámetros son solo `resource` y `newsletter`.
+- El aviso se anuncia a los lectores de pantalla como "Aviso de cookies". La elección se guarda en `localStorage` con la clave `emotia-analytics-consent`; al rechazar con GA4 ya cargado se envía `analytics_storage: denied` y se desactiva la propiedad.
 
 ### Seguridad y datos sensibles
 
@@ -190,11 +193,16 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
   - Evidence: `pnpm test`: 47 pruebas en verde; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores; `pnpm build`: correcto
   - Evidence: e2e contra `next start` en 3101, build sin id: 17 en verde y 2 omitidas (las de "con id"), las 10 anteriores incluidas; sin elegir, tras rechazar y sin id: 0 pedidos a Google y sin cookie `_ga`; el rechazo se recuerda al recargar; "Preferencias de cookies" reabre el aviso en las 4 rutas
   - Evidence: build con `NEXT_PUBLIC_GA_ID=G-TEST123456`: tras "Aceptar" se pide `googletagmanager.com/gtag/js?id=G-TEST123456` (abortado en la prueba); tras "Rechazar", ningún pedido
-  - Evidence: capturas en 1280 y 390 px de `/no-somos-islas` con el aviso: colores de marca, botones visibles, la página sigue usable
-- [ ] T5 (CA-09): Eventos de la página por `track-event`, incluido `nsis_signup` con `newsletter`, y prueba de que llegan solo con consentimiento.
+  - Evidence: capturas en 1280 y 390 px de `/no-somos-islas` con el aviso: colores de marca, botones visibles, la página sigue usable (commit 21cda7f)
+- [x] T5 (CA-09): Eventos de la página por `track-event`, incluido `nsis_signup` con `newsletter`, y prueba de que llegan solo con consentimiento.
+  - Evidence: Vitest `track-event`: 6 pruebas (payload exacto con consentimiento; nada con rechazo, sin elección o sin `gtag`; `nsis_signup` con `yes` y `no`); `pnpm test`: 54 pruebas en verde; `pnpm lint`: sin hallazgos; `pnpm typecheck`: sin errores
+  - Evidence: e2e con build `NEXT_PUBLIC_GA_ID=G-TEST123456` y `gtag.js` simulado: tras "Aceptar" llegan `nsis_qr_arrival`, `nsis_ebook_download_click`, `nsis_audio_start` una sola vez y `nsis_audio_complete`; tras "Rechazar", ninguno; ninguna entrada del `dataLayer` contiene "@"; 20 en verde y 1 omitida
+  - Evidence: build final sin id, suite e2e completa: 17 en verde y 4 omitidas (las que requieren id)
+  - Evidence: `nsis_signup` en la rama de éxito del formulario solo tiene prueba unitaria del helper; el e2e no envía el formulario para no mandar correo real
+  - Evidence: agrega a `## Specs` la medición de la llegada con consentimiento tardío, los parámetros permitidos y la etiqueta y la clave del aviso
 
 ## Evidence
 
 ## Progress
 
-Plan aprobado. T1 a T4 terminadas. Siguiente paso: T5, eventos de la página.
+T1 a T5 terminadas. `## Specs` cambió en T5 (Analytics y consentimiento): hace falta aceptar el plan de nuevo. Siguiente paso: DW Review y cierre.
