@@ -1,3 +1,5 @@
+import { externalLinks } from "@/lib/external-links";
+
 export const islasAssets = {
   cover: "/no-somos-islas/hero-cover.webp",
   ebookFile: "/no-somos-islas/No_somos_islas_Ruth_Arias.pdf",
@@ -63,8 +65,8 @@ export const islasAccessMessages = {
   noticeResource: "No somos islas",
   confirmationSubject: "Tu ebook y audio de No somos islas",
   confirmationIntro: 'Gracias por pedir "No somos islas".',
-  ebookUrl: "https://rutharias.emotia.ar/no-somos-islas/No_somos_islas_Ruth_Arias.pdf",
-  audioUrl: "https://rutharias.emotia.ar/no-somos-islas/?origen=ebook#audio",
+  ebookUrl: new URL(islasAssets.ebookFile, externalLinks.rutharias).href,
+  audioUrl: new URL("/no-somos-islas/?origen=ebook#audio", externalLinks.rutharias).href,
   newsletterYes: "Sí, quiero recibir novedades y recursos.",
   newsletterNo: "No pediste recibir novedades.",
   confirmationPrivacy: "Este sitio no guarda tu dirección. El aviso quedó en la bandeja de Emotia.",

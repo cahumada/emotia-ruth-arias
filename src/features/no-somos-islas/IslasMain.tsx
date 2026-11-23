@@ -47,6 +47,11 @@ function HeadphonesIcon() {
 
 const accessSchema = createIslasAccessSchema();
 
+// gtag is defined by the analytics init script, which can load after the arrival effect runs:
+// retry for about five seconds before giving up.
+const GTAG_POLL_MS = 250;
+const GTAG_MAX_ATTEMPTS = 20;
+
 export function IslasMain() {
   const [manualUnlock, setManualUnlock] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -84,13 +89,12 @@ export function IslasMain() {
       medium === "qr" ? "nsis_qr_arrival" : medium === "pdf_link" ? "nsis_pdf_link_arrival" : null;
     if (!eventName) return;
 
-    // gtag is defined by the analytics init script, which can load after this effect runs.
     let attempts = 0;
     const timer = window.setInterval(() => {
       attempts += 1;
       if (trackIslasEvent(eventName)) arrivalSentRef.current = true;
-      if (arrivalSentRef.current || attempts >= 20) window.clearInterval(timer);
-    }, 250);
+      if (arrivalSentRef.current || attempts >= GTAG_MAX_ATTEMPTS) window.clearInterval(timer);
+    }, GTAG_POLL_MS);
     return () => window.clearInterval(timer);
   }, [consentChoice]);
 
@@ -115,7 +119,7 @@ export function IslasMain() {
       player.removeEventListener("play", onPlay);
       player.removeEventListener("ended", onEnded);
     };
-  }, [unlocked]);
+  }, []);
 
   async function onValid(values: IslasAccessValues) {
     setIsSending(true);

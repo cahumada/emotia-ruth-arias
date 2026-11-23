@@ -11,7 +11,7 @@ it("trims the email and accepts a valid request", () => {
 });
 
 it.each(["", "   ", "no-es-un-correo", `${"a".repeat(250)}@example.com`])(
-  "rejects the email %#  with the contract message",
+  "rejects the email %j with the contract message",
   (email) => {
     const result = schema.safeParse({ email, newsletter: true });
 

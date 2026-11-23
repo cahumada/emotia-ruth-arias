@@ -25,4 +25,11 @@ describe("isEbookEntry", () => {
     expect(isEbookEntry("?utm_medium=email", "#audio")).toBe(false);
     expect(isEbookEntry("?origen=otro", "#audio")).toBe(false);
   });
+
+  it("rejects values or keys that only contain a known origin", () => {
+    expect(isEbookEntry("?utm_medium=qrx", "#audio")).toBe(false);
+    expect(isEbookEntry("?xutm_medium=qr", "#audio")).toBe(false);
+    expect(isEbookEntry("?utm_medium=pdf_links", "#audio")).toBe(false);
+    expect(isEbookEntry("?origen=ebookfoo", "#audio")).toBe(false);
+  });
 });

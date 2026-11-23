@@ -13,20 +13,20 @@ export type AnalyticsEvent =
   | { name: "nsis_pdf_link_arrival"; params: Resource };
 
 /** Sends the event to GA4 only with consent granted and gtag loaded. Returns whether it was sent. */
-export function trackEvent<E extends AnalyticsEvent>(name: E["name"], params: E["params"]): boolean {
+export function trackEvent(event: AnalyticsEvent): boolean {
   if (typeof window === "undefined") return false;
   if (consentStore.getChoice() !== "granted" || typeof window.gtag !== "function") return false;
-  window.gtag("event", name, params);
+  window.gtag("event", event.name, event.params);
   return true;
 }
 
 export function trackIslasEvent(name: Exclude<AnalyticsEvent["name"], "nsis_signup">): boolean {
-  return trackEvent<AnalyticsEvent>(name, { resource: "no_somos_islas" });
+  return trackEvent({ name, params: { resource: "no_somos_islas" } });
 }
 
 export function trackIslasSignup(newsletter: boolean): boolean {
-  return trackEvent<AnalyticsEvent>("nsis_signup", {
-    resource: "no_somos_islas",
-    newsletter: newsletter ? "yes" : "no",
+  return trackEvent({
+    name: "nsis_signup",
+    params: { resource: "no_somos_islas", newsletter: newsletter ? "yes" : "no" },
   });
 }

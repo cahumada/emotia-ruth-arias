@@ -199,10 +199,10 @@ Unas 1.100 líneas de autoría, sin contar los binarios: página y estilos 400, 
   - Evidence: e2e con build `NEXT_PUBLIC_GA_ID=G-TEST123456` y `gtag.js` simulado: tras "Aceptar" llegan `nsis_qr_arrival`, `nsis_ebook_download_click`, `nsis_audio_start` una sola vez y `nsis_audio_complete`; tras "Rechazar", ninguno; ninguna entrada del `dataLayer` contiene "@"; 20 en verde y 1 omitida
   - Evidence: build final sin id, suite e2e completa: 17 en verde y 4 omitidas (las que requieren id)
   - Evidence: `nsis_signup` en la rama de éxito del formulario solo tiene prueba unitaria del helper; el e2e no envía el formulario para no mandar correo real
-  - Evidence: agrega a `## Specs` la medición de la llegada con consentimiento tardío, los parámetros permitidos y la etiqueta y la clave del aviso
+  - Evidence: agrega a `## Specs` la medición de la llegada con consentimiento tardío, los parámetros permitidos y la etiqueta y la clave del aviso (commit 946823c)
 
 ## Evidence
 
 ## Progress
 
-T1 a T5 terminadas. `## Specs` cambió en T5 (Analytics y consentimiento): hace falta aceptar el plan de nuevo. Siguiente paso: DW Review y cierre.
+T1 a T5 terminadas. DW Review: risk, readability y reliability `pass`; resilience sin informe; riesgo `high` por tamaño y por los cambios sin commitear del desarrollador en `.agents/skills/` y `.dw-told-ai/`, que quedan en el árbol por decisión suya. Correcciones de la revisión READ-01 a READ-04 y READ-06 a READ-10 en un commit propio: `isEbookEntry` compara valores exactos (RED: `utm_medium=qrx`, `xutm_medium=qr`, `pdf_links` y `ebookfoo` daban `true`; GREEN: 56 pruebas), `trackEvent` recibe el evento entero y el tipo ata nombre y parámetros, comentarios en inglés, constantes con nombre, sin cast, URL del correo derivadas; e2e 17 en verde sin id y 10 en verde con id. READ-05 (copia del flujo de correo) se acepta y se menciona en el PR. RISK-02 (sin límite de tasa, igual que la home) queda para una historia aparte. `## Specs` cambió en T5: hace falta aceptar el plan de nuevo. Siguiente paso: repetir DW Review sobre el árbol final, reconocerla y cerrar.

@@ -49,7 +49,14 @@ describe("trackEvent", () => {
     choice.value = "granted";
     vi.unstubAllGlobals();
 
-    expect(trackEvent("nsis_qr_arrival", { resource: "no_somos_islas" })).toBe(false);
+    expect(trackEvent({ name: "nsis_qr_arrival", params: { resource: "no_somos_islas" } })).toBe(false);
+  });
+
+  it("ties each event name to its own params at compile time", () => {
+    choice.value = "denied";
+
+    // @ts-expect-error nsis_audio_start carries no newsletter field.
+    trackEvent({ name: "nsis_audio_start", params: { resource: "no_somos_islas", newsletter: "yes" } });
   });
 
   it("sends nsis_signup with newsletter yes or no and no other field", () => {

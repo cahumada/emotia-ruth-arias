@@ -18,7 +18,7 @@ export function GoogleAnalytics() {
   useEffect(() => {
     if (!gaId) return;
     // gtag.js reads this flag before sending anything, so a rejection stops events at once.
-    (window as unknown as Record<string, unknown>)[`ga-disable-${gaId}`] = !isEnabled;
+    window[`ga-disable-${gaId}`] = !isEnabled;
     if (choice === "denied" && typeof window.gtag === "function") {
       window.gtag("consent", "update", { analytics_storage: "denied" });
     }

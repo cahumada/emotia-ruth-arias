@@ -37,6 +37,7 @@ export async function deliverIslasAccess({
   if (!parsed.success) {
     const companyOnly = parsed.error.issues.every((issue) => issue.path[0] === "company");
 
+    // A honeypot over 500 characters fails the schema: answer as a filled one, with no mail.
     if (companyOnly) {
       logger.info({ outcome: "ignored", correlationId }, "Islas access ignored");
       return { status: "success" };
@@ -59,8 +60,8 @@ export async function deliverIslasAccess({
     return { status: "error" };
   }
 
-  // La bandeja del estudio es el único registro. La confirmación sale solo
-  // después de que ese aviso fue aceptado.
+  // The studio inbox is the only record. The confirmation goes out only
+  // after that notice was accepted.
   const notice = buildIslasNoticeEmail(from, to, parsed.data.email, parsed.data.newsletter, now);
   const confirmation = buildIslasConfirmationEmail(from, parsed.data.email, parsed.data.newsletter);
 

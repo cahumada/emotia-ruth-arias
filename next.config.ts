@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // One week of browser and CDN cache for the ebook, the audio and the cover;
+        // `:file+` keeps the page route itself out.
         source: "/no-somos-islas/:file+",
         headers: [
           {

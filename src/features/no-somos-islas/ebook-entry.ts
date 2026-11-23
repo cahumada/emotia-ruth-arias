@@ -1,6 +1,8 @@
-const EBOOK_ORIGIN = /(?:utm_medium=(?:qr|pdf_link)|[?&]origen=ebook)/;
+const EBOOK_MEDIUMS = new Set(["qr", "pdf_link"]);
 
-// Regla de negocio: el QR y el enlace del PDF llevan directo al audio, sin repetir el formulario.
+// Business rule: the ebook's QR and its tappable link go straight to the audio, without the form again.
 export function isEbookEntry(search: string, hash: string): boolean {
-  return hash === "#audio" && EBOOK_ORIGIN.test(search);
+  if (hash !== "#audio") return false;
+  const params = new URLSearchParams(search);
+  return EBOOK_MEDIUMS.has(params.get("utm_medium") ?? "") || params.get("origen") === "ebook";
 }
